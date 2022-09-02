@@ -9,21 +9,32 @@ const displayData = (datas) => {
     // console.log(datas);
     const sectionContainer = document.getElementById('section-container');
     sectionContainer.innerHTML = '';
+    // datas = datas.slice(0, 20);
+
+    const notFound = document.getElementById('no-message')
+    if (datas === null) {
+        notFound.classList.remove('hidden');
+    }
+    else {
+        notFound.classList.add('hidden');
+    }
+
+
     datas.forEach(data => {
         // console.log(data);
+
         const { strCategory, strDrinkThumb, idDrink, strDrink, strInstructions } = data;
 
         const createDiv = document.createElement('div');
 
         createDiv.innerHTML = `
-                    <div class="card card-compact w-full bg-base-100 shadow-xl">
+                    <div class="card card-compact w-full h-full bg-base-100 shadow-xl">
                     <figure><img src="${strDrinkThumb}" alt="" /></figure>
                     <div class="card-body">
                     <h2 class="card-title">${strDrink}</h2>
-                    <p>${strInstructions.length > 30 ? strInstructions.slice(0, 30) : strInstructions}</p>
+                    <p>${strInstructions}</p>
                     <div class="card-actions justify-center">
                    <label  onclick="loadCocktail(${idDrink})" for="my-modal-6" class="btn btn-primary">See more</label>
-
                     </div>
                    </div>
                    </div>
@@ -54,11 +65,10 @@ const loadCocktailDisplay = (item) => {
     createModal.innerHTML = `
                  <figure><img src="${strDrinkThumb}" alt="" /></figure>
                   <p class="py-4">${strCategory}</p>
-                  <p>${strInstructions.length > 30 ? strInstructions.slice(0, 30) : strInstructions}</p>
+                  <p>${strInstructions}</p>
                     <div class="modal-action">
                         <label for="my-modal-6" class="btn">close!</label>
                     </div>
-
     `;
     openModal.appendChild(createModal);
 
